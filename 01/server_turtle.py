@@ -50,7 +50,7 @@ def start_server():
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(HOST)
     screen.listen()
-    sock.listen(1)
+    sock.listen(3)
     
     while(1):
         try:
