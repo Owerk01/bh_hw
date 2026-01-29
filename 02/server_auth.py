@@ -3,7 +3,7 @@ import json
 import threading
 import os
 
-HOST = ("127.0.0.1", 6666)
+HOST = ("127.0.0.1", 8080)
 
 def send_message(message: str, sock):
     sock.send(message.encode())
@@ -99,7 +99,7 @@ def main():
             except socket.timeout:
                 continue
     except KeyboardInterrupt:
-        print("Server is closed")
+        print("\nServer is closed")
     except Exception as e:
         print(f"Somethng went wrong: {e}")
     
