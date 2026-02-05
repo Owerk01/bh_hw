@@ -1,6 +1,15 @@
 import flask
 import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
+
+# GROQ_API_KEY=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
+# WEATHER_API_KEY=2a4ff86f9aaa70041ec8e82db64abf56
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -35,7 +44,7 @@ def foxes(counter):
 
 @app.route("/weather-minsk/")
 def weather_minsk():
-    params = {'q': "Minsk", 'APPID': '2a4ff86f9aaa70041ec8e82db64abf56'}
+    params = {'q': "Minsk", 'APPID': f'{WEATHER_API_KEY}'}
     res = requests.get("http://api.openweathermap.org/data/2.5/weather", params)
     res = res.json()
 
@@ -43,7 +52,7 @@ def weather_minsk():
 
 @app.route("/weather/<city>/")
 def weather_city(city):
-    params = {'q': f"{city}", 'APPID': '2a4ff86f9aaa70041ec8e82db64abf56'}
+    params = {'q': f"{city}", 'APPID': f'{WEATHER_API_KEY}'}
     res = requests.get("http://api.openweathermap.org/data/2.5/weather", params)
     res = res.json()
 
@@ -52,7 +61,7 @@ def weather_city(city):
 @app.route("/llm/<question>/")
 def llm(question: str):
     headers = {"Content-Type": "application/json", 
-               "Authorization": "Bearer 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"}
+               "Authorization": f"{GROQ_API_KEY}"}
     data = {"model": "llama-3.3-70b-versatile",
             "messages": [{
                 "role": "user",
@@ -70,5 +79,3 @@ def page_not_found(error):
     return '<h1 style="color:red"> такой страницы не существует </h1>'
 
 app.run(debug=True)
-# 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
-# meta-llama/llama-guard-4-12b

@@ -14,6 +14,10 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+# SECRET_KEY=my_secret_key_sadj;ask_dj;askjd9032094u
+# GROQ_API_KEY=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
+# WEATHER_API_KEY=2a4ff86f9aaa70041ec8e82db64abf56
+
 BASE_DIR = os.path.dirname(__file__)
 
 app = flask.Flask(__name__, 
