@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Ошибка — My Web App{% endblock %}
+
+{% block content %}
+<div style="text-align: center; max-width: 600px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <div style="font-size: 5rem; margin-bottom: 1.5rem; color: #e74c3c;">
+        ⚠️
+    </div>
+
+    <h2 style="color: #2c3e50; margin-bottom: 1rem;">Упс! Что-то пошло не так</h2>
+
+    <p style="color: #7f8c8d; font-size: 1.1rem; margin-bottom: 1.5rem;">
+        {% if error.code == 404 %}
+            Страница не найдена 😢
+        {% elif error.code == 500 %}
+            Внутренняя ошибка сервера 💥
+        {% else %}
+            Произошла ошибка: <strong>{{ error.code or 'неизвестная' }}</strong>
+        {% endif %}
+    </p>
+
+    {% if error.description and error.description not in ['Not Found', 'Internal Server Error'] %}
+        <p style="background: #fdf6f6; padding: 10px; border-radius: 8px; color: #c0392b; font-family: monospace; margin: 1.5rem 0;">
+            {{ error.description }}
+        </p>
+    {% endif %}
+
+    <div style="margin-top: 1.5rem;">
+        <a href="{{ url_for('index') }}" 
+           style="display: inline-block; padding: 12px 28px; background: #3498db; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background 0.2s;">
+            🏠 Вернуться на главную
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Уточка №{{ num }} — My Flask App{% endblock %}
+
+{% block content %}
+<div style="text-align: center; max-width: 800px; margin: 0 auto;">
+    <h2>Случайная уточка №{{ num }}</h2>
+    
+    {% if url %}
+        <div style="margin: 2rem 0; padding: 10px; background: #f0f8ff; border-radius: 12px; display: inline-block;">
+            <img src="{{ url }}" 
+                 alt="Милая уточка" 
+                 style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        </div>
+    {% else %}
+        <div class="error" style="padding: 20px; margin: 2rem 0;">
+            Не удалось загрузить уточку. Попробуйте ещё раз!
+        </div>
+    {% endif %}
+
+    <div style="margin-top: 1.5rem;">
+        <a href="{{ url_for('duck') }}" 
+           style="display: inline-block; padding: 12px 24px; background: #3498db; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: background 0.2s;">
+            Ещё одну уточку!
+        </a>
+    </div>
+
+    <p style="margin-top: 1.5rem; color: #777;">
+        <a href="{{ url_for('index') }}">← Вернуться на главную</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — My Web App{% endblock %}
+
+{% block content %}
+<h2>👋 Добро пожаловать!</h2>
+<p>Выберите действие ниже:</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 2rem;">
+    
+    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 20px; background: #f8f9fa; transition: transform 0.2s;">
+        <h3>🦆 Случайная уточка</h3>
+        <p>Получите милую картинку уточки.</p>
+        <a href="{{ url_for('duck') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none; font-weight: bold;">
+            → Посмотреть уточку
+        </a>
+    </div>
+
+    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 20px; background: #f8f9fa; transition: transform 0.2s;">
+        <h3>🦊 Случайные лисы</h3>
+        <p>Выберите количество (до 10) и получите коллекцию лисичек!</p>
+        <a href="{{ url_for('foxes') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none; font-weight: bold;">
+            → Показать лис
+        </a>
+    </div>
+
+    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 20px; background: #f8f9fa; transition: transform 0.2s;">
+        <h3>🌤 Погода</h3>
+        <p>Узнайте погоду в любом городе мира. Для Минска — виджет!</p>
+        <a href="{{ url_for('weather') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none; font-weight: bold;">
+            → Узнать погоду
+        </a>
+    </div>
+
+    <div style="border: 1px solid #ddd; border-radius: 10px; padding: 20px; background: #f8f9fa; transition: transform 0.2s;">
+        <h3>🤖 Спросить ИИ</h3>
+        <p>Задайте вопрос языковой модели Llama 3.3.</p>
+        <a href="{{ url_for('llm') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none; font-weight: bold;">
+            → Задать вопрос
+        </a>
+    </div>
+
+</div>
+
+{% if not session.login %}
+    <div style="margin-top: 2rem; padding: 15px; background: #fff8e1; border-left: 4px solid #ffc107; border-radius: 4px;">
+        <p>💡 Чтобы получить полный доступ ко всем функциям, <a href="{{ url_for('login') }}">войдите</a> или <a href="{{ url_for('register') }}">зарегистрируйтесь</a>.</p>
+    </div>
+{% endif %}
+{% endblock %}

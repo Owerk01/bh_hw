@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Погода — My Web App{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h2>Узнать погоду</h2>
+    <p style="color: #666; margin-bottom: 1.5rem;">
+        Введите название города (например: <em>Minsk, London, Tokyo</em>).
+    </p>
+
+    <form method="post" style="margin-bottom: 2rem;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <input 
+                type="text" 
+                name="city" 
+                placeholder="Например: Minsk, Paris, Tokyo"
+                value="{{ request.form.city or '' }}" 
+                required
+                style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;"
+            >
+            <button type="submit" 
+                    style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 6px; font-weight: bold;">
+                Показать
+            </button>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="error" style="margin: 1.5rem 0; padding: 12px; background: #ffebee; border-left: 4px solid #f44336; border-radius: 6px; color: #c62828;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if city %}
+        <h3 style="margin: 2rem 0 1rem;">Погода в городе: <em>{{ city|title }}</em></h3>
+
+        {% if is_minsk %}
+            <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 1.5rem 0;">
+                <h4 style="margin-bottom: 15px; color: #2c3e50;">🌦️ Официальный виджет OpenWeatherMap (Минск)</h4>
+                <div id="openweathermap-widget-1"></div>
+            </div>
+
+            <link rel="stylesheet" href="//openweathermap.org/themes/openweathermap/assets/vendor/owm/css/style.min.css">
+            <script src="//unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+            <script type="text/javascript">
+                window.myWidgetParam = window.myWidgetParam || [];
+                window.myWidgetParam.push({
+                    id: 1,
+                    cityid: '625144',
+                    appid: '2a4ff86f9aaa70041ec8e82db64abf56',
+                    units: 'metric',
+                    containerid: 'openweathermap-widget-1'
+                });
+                (function() {
+                    var script = document.createElement('script');
+                    script.async = true;
+                    script.charset = "utf-8";
+                    script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator-2.0.js";
+                    document.head.appendChild(script);
+                })();
+            </script>
+
+        {% elif weather %}
+            <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 1.5rem 0;">
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    {% if weather.icon %}
+                        <img 
+                            src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" 
+                            alt="Иконка погоды"
+                            style="width: 80px; height: 80px;"
+                        >
+                    {% endif %}
+                    <div>
+                        <p style="font-size: 2rem; font-weight: bold; margin: 0;">{{ weather.temp_c }}°C</p>
+                        <p style="color: #555; margin: 5px 0;">{{ weather.description|capitalize }}</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                    <div><strong>Ощущается как:</strong> {{ weather.feels_like_c }}°C</div>
+                    <div><strong>Влажность:</strong> {{ weather.humidity }}%</div>
+                    <div><strong>Давление:</strong> {{ weather.pressure }} гПа</div>
+                    <div><strong>Ветер:</strong> {{ weather.wind_speed }} м/с</div>
+                    <div><strong>Видимость:</strong> {{ (weather.visibility / 1000)|round(1) }} км</div>
+                    <div><strong>Страна:</strong> {{ weather.country }}</div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <p style="text-align: center; margin-top: 2rem; color: #777;">
+        <a href="{{ url_for('index') }}">← Вернуться на главную</a>
+    </p>
+</div>
+{% endblock %}

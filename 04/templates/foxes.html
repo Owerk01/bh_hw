@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Лисы — My Web App{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    <h2>Сколько лис показать? (от 1 до 10)</h2>
+    
+    <form method="post" style="margin: 1.5rem 0;">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <input 
+                type="number" 
+                name="num" 
+                min="1" 
+                max="10" 
+                value="{{ request.form.num or 1 }}" 
+                required
+                style="width: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem;"
+            >
+            <button type="submit" style="padding: 8px 16px;">Показать лис!</button>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="error" style="margin: 1.5rem 0; padding: 12px; background: #ffebee; border-left: 4px solid #f44336; border-radius: 4px;">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if foxes %}
+        <h3 style="margin-top: 2rem;">Ваши лисы ({{ foxes|length }} шт.):</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; margin-top: 1.5rem;">
+            {% for fox in foxes %}
+                <div style="text-align: center; background: #f9f9f9; padding: 12px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
+                    <img 
+                        src="{{ fox.url }}" 
+                        alt="Лиса №{{ fox.num }}" 
+                        style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 8px;"
+                        loading="lazy"
+                    >
+                    <p style="font-size: 0.9rem; color: #555; margin: 0;">№{{ fox.num }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="{{ url_for('foxes') }}" 
+               style="display: inline-block; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 6px;">
+                Показать других лис
+            </a>
+        </div>
+    {% endif %}
+
+    <p style="margin-top: 2rem; text-align: center; color: #777;">
+        <a href="{{ url_for('index') }}">← Вернуться на главную</a>
+    </p>
+</div>
+{% endblock %}
