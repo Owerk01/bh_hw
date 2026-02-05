@@ -6,6 +6,13 @@ import json
 import re
 import email_validator
 import hashlib
+from dotenv import load_dotenv
+
+load_dotenv()
+
+GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+WEATHER_API_KEY = os.getenv('WEATHER_API_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -13,7 +20,7 @@ app = flask.Flask(__name__,
             template_folder=os.path.join(BASE_DIR, "templates"),
             static_folder=os.path.join(BASE_DIR, "static"))
 
-app.config['SECRET_KEY'] = 'my secret key sadj;ask dj;askjd9032094u'
+app.config['SECRET_KEY'] = SECRET_KEY
 
 LOGIN_PATTERN = re.compile(r'^[a-zA-Z0-9_]{6,20}$')
 PASSWORD_PATTERN = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$')
@@ -221,7 +228,7 @@ def weather():
             pass
         else:
             try:
-                params = {'q': f"{city}", 'APPID': '2a4ff86f9aaa70041ec8e82db64abf56', 'units': 'metric'}
+                params = {'q': f"{city}", f'APPID': {WEATHER_API_KEY}, 'units': 'metric'}
                 res = requests.get("http://api.openweathermap.org/data/2.5/weather", params)
                 res = res.json()
                 
@@ -258,7 +265,7 @@ def llm():
             error = "Вы не ввели запрос"
         else:
             headers = {"Content-Type": "application/json", 
-                    "Authorization": "Bearer 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"}
+                    "Authorization": f"Bearer {GROQ_API_KEY}"}
             data = {"model": "llama-3.3-70b-versatile",
                     "messages": [{
                         "role": "user",
@@ -277,4 +284,3 @@ def page_not_found(error):
     return flask.render_template("error.html", error=error)
 
 app.run(debug=True)
-# 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
