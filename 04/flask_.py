@@ -292,4 +292,4 @@ def llm():
 def page_not_found(error):
     return flask.render_template("error.html", error=error)
 
-app.run(debug=True)
+app.run(debug=True, host='0.0.0.0')
