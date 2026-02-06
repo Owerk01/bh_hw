@@ -285,11 +285,11 @@ def llm():
                 res = requests.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data)
                 answer = res.json()["choices"][0]["message"]["content"]
             except:
-                error = f"Что-то не так: {res.json()["error"]["code"]}"
+                error = f'Что-то пошло не так: {res.json()["error"]["code"]}'
     return flask.render_template("llm.html", error=error, answer=answer, question=question)
 
 @app.errorhandler(404)
 def page_not_found(error):
     return flask.render_template("error.html", error=error)
 
-app.run(debug=True, host='0.0.0.0')
+app.run(debug=True, host='0.0.0.0', port=8000)
