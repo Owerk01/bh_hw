@@ -124,7 +124,7 @@ def get_user_by_login(login: str):
 def only_authorized(f):
     @wraps(f)
     def wrapper(*a, **kw):
-        if not flask.session["login"]:
+        if not flask.session.get("login"): 
             return flask.redirect(flask.url_for('login'))
         return f(*a, **kw)
     return wrapper
@@ -155,6 +155,7 @@ def login():
     return flask.render_template('login.html', errors=errors)
 
 @app.route('/logout')
+@only_authorized
 def logout():
     flask.session.clear()
     return flask.redirect(flask.url_for("login"))
@@ -188,6 +189,7 @@ def index():
     return flask.render_template('index.html')
 
 @app.route("/duck/")
+@only_authorized
 def duck():
     res = requests.get("https://random-d.uk/api/random")
     res = res.json()
@@ -196,6 +198,7 @@ def duck():
     return flask.render_template('duck.html', num=num, url=url)
 
 @app.route("/foxes/", methods=['post', 'get'])
+@only_authorized
 def foxes():
     error = ''
     foxes = []
@@ -220,6 +223,7 @@ def foxes():
     return flask.render_template("foxes.html", foxes=foxes, error=error, submitted=bool(foxes or error))
 
 @app.route('/weather/', methods=['post', 'get'])
+@only_authorized
 def weather():
     error = ''
     city = ''
@@ -258,6 +262,7 @@ def weather():
                                  weather=context)
 
 @app.route('/llm/', methods=["post", "get"])
+@only_authorized
 def llm():
     error = ''
     answer = ''
