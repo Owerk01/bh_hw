@@ -259,7 +259,8 @@ def weather():
                                  error=error,
                                  city=city,
                                  is_minsk=True if city == "minsk" else False,
-                                 weather=context)
+                                 weather=context,
+                                 WEATHER_API_KEY=WEATHER_API_KEY)
 
 @app.route('/llm/', methods=["post", "get"])
 @only_authorized

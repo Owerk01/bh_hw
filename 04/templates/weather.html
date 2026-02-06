@@ -38,7 +38,10 @@
         {% if is_minsk %}
             <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin: 1.5rem 0;">
                 <h4 style="margin-bottom: 15px; color: #2c3e50;">🌦️ Официальный виджет OpenWeatherMap (Минск)</h4>
-                <div id="openweathermap-widget-1"></div>
+                
+                <div style="overflow-x: auto; padding: 10px 0;">
+                    <div id="openweathermap-widget-1" style="min-width: 600px;"></div>
+                </div>
             </div>
 
             <link rel="stylesheet" href="//openweathermap.org/themes/openweathermap/assets/vendor/owm/css/style.min.css">
@@ -48,7 +51,7 @@
                 window.myWidgetParam.push({
                     id: 1,
                     cityid: '625144',
-                    appid: '2a4ff86f9aaa70041ec8e82db64abf56',
+                    appid: '{{WEATHER_API_KEY}}', 
                     units: 'metric',
                     containerid: 'openweathermap-widget-1'
                 });
