@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block main_menu %}
+{{ super() }}
+{% include 'quiz_menu.html' %}
+{% endblock %}
+
+{% block content1_head %}
+<h2>КВИЗЫ 
+  <a class="button" href="{{ url_for('quiz_add') }}">+ Квиз</a>
+</h2>
+{% endblock %}
+
+{% block content1 %}
+<div class="table-container">
+  <div class="quizes quiz_form">
+<div class="quizes quiz_form">
+  <div class="quiz-row quiz-hrow">
+    <div class="quiz-col">№</div>
+    <div class="quiz-col">Название</div>
+    <div class="quiz-col">Владелец</div>
+    <div class="quiz-col">Вопросов</div>
+    <div class="quiz-col">Действия</div>
+  </div>
+  {% for q in quizes %}
+  <div class="quiz-row">
+    <div class="quiz-col">{{ loop.index }}</div>
+    <div class="quiz-col">{{ q.name }}</div>
+    <div class="quiz-col">{{ q.user.name if q.user else '—' }}</div>
+    <div class="quiz-col">{{ len(q.question) }}</div>
+    <div class="quiz-col">
+      <a href="{{ url_for('quiz_edit', id=q.id) }}">✎</a>
+      <a href="{{ url_for('quiz_delete', id=q.id) }}" onclick="return confirm('Удалить квиз?')">🗑</a>
+      <a href="{{ url_for('quiz_questions_edit', quiz_id=q.id) }}">❓</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content2_head %}
+<h2>Вопросы 
+  <a class="button" href="{{ url_for('question_add') }}">+ Вопрос</a>
+</h2>
+{% endblock %}
+
+{% block content2 %}
+<div class="table-container">
+  <div class="questions quiz_form">
+<div class="questions quiz_form">
+  <div class="question-row question-hrow">
+    <div class="quiz-col">№</div>
+    <div class="quiz-col">Вопрос</div>
+    <div class="quiz-col">Ответ</div>
+    <div class="quiz-col">В1</div>
+    <div class="quiz-col">В2</div>
+    <div class="quiz-col">В3</div>
+    <div class="quiz-col">Действия</div>
+  </div>
+  {% for q in questions %}
+  <div class="question-row">
+    <div class="quiz-col">{{ loop.index }}</div>
+    <div class="quiz-col">{{ q.question }}</div>
+    <div class="quiz-col">{{ q.answer }}</div>
+    <div class="quiz-col">{{ q.wrong1 }}</div>
+    <div class="quiz-col">{{ q.wrong2 }}</div>
+    <div class="quiz-col">{{ q.wrong3 }}</div>
+    <div class="quiz-col">
+      <a href="{{ url_for('question_edit', id=q.id) }}">✎</a>
+      <a href="{{ url_for('question_delete', id=q.id) }}" onclick="return confirm('Удалить вопрос?')">🗑</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content1 %}
+<h2>Редактировать вопросы в квизе: {{ quiz.name }}</h2>
+<form method="post">
+  {% for q in all_questions %}
+    <label>
+      <input type="checkbox" name="question_ids" value="{{ q.id }}"
+        {% if q.id in current_ids %}checked{% endif %}>
+      {{ q.question[:50] }}...
+    </label><br>
+  {% endfor %}
+  <input type="submit" value="Сохранить" class="button">
+  <a href="{{ url_for('view_quiz_edit') }}" class="button">Назад</a>
+</form>
+{% endblock %}

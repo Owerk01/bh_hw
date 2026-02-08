@@ -1,0 +1,158 @@
+
+<style>
+    /* body{
+        
+    } */
+    .users_container{
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 800px;
+    }
+
+    .user_card {
+        /* background-color: rgb(235, 201, 243); */
+        background: linear-gradient(to bottom right, #e3c9f0, #f9e8fe);
+        padding: 10px;
+        
+        border: 1px solid black;
+        border-radius: 7%;
+        
+        width: 140px;
+        height: 200px;
+        
+
+        display: flex;
+        flex-direction: column; /*наполнение по вертикали*/ 
+        align-items: center; /* горизонтальное центрирование*/
+        justify-content: space-evenly; /*вертикальное центрирование*/
+        
+        transition: all 1s ease-in-out;
+        box-shadow: 1px 1px 1px gray;
+        position: relative;
+    }
+
+    
+
+    .user_card:hover { /*при наведении мышкой*/
+        background-color: rgb(230, 210, 230);
+        box-shadow: 4px 4px 7px 3px gray;
+        transform: scale(1.05) translateY(-10px);    
+        transition: all 0.3s ease; 
+    }
+
+   
+    .u_num, .u_add{
+        font-size: 3em;
+        color: rgb(164, 100, 204);
+        margin: 5px;
+        
+    }
+
+    .u_name{
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: darkslateblue;
+        border: 1px solid grey;
+        padding: 5px;
+        margin: 10px;
+        border-radius: 10px;
+        background-color:#edc8ec;
+        width: 100%;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .u_info{
+        color: gray;
+        font-style: italic;
+    }
+
+    .u_add{
+        font-size: 6rem; 
+        font-weight: 900;
+    }
+
+    .card_add{
+        position: relative;
+    }
+
+    .card_add:hover  .u_info_add{
+        display: block;
+        opacity: 1;
+        
+
+    }
+
+    .u_info_add{
+        text-align: center;
+        color: rgb(177, 151, 186);
+        font-style: italic;
+        position: absolute;
+        width: 140px;
+        top: -5px;        
+        opacity: 0;
+        transition: all 1s ease;
+    }
+
+    h2{
+        color: #80578c;
+        font-size: 1.8rem;
+        font-weight: 900;
+    }
+
+    .del_user{
+        position: absolute;
+        bottom: -10px;
+        a{
+            color: rgb(208, 107, 173);
+            text-decoration: none;
+            font-size: 0.7rem;
+        }
+    }
+
+</style>
+
+{% extends "base.html" %}
+
+{% include 'user_modal.html'%}
+
+{% block main_menu %} 
+    {{ super() }} 
+    <!-- <li><a href="/">На главную </a></li> -->
+{% endblock %}
+
+{% block content1_head %}
+    <h2>ПОЛЬЗОВАТЕЛИ В БД </h2>    
+{% endblock %}
+
+{% block content1 %}    
+    <div class="users_container ">
+
+        {% for user in users %}
+
+            <div class="user_card">
+                <p class="u_num"> {{ loop.index }} </p>
+                <p class="u_name">{{ user.name }}</p> 
+                <p class="u_info"> длина имени - {{ len(user.name) }}</p>
+                <!-- len в шаблонах нет - ее надо отдельно передать как аргумент-->
+                <!-- <p class="del_user"><a  href="/user_delete/{{user.id}}/">удалить</a></p> -->
+                <p class="del_user"><a  href="{{ url_for('user_delete', id=user.id) }}"> удалить </a></p>
+            </div>
+        
+        {% endfor %}
+
+        <a href="#modal-one">
+            <div class="user_card card_add">
+                <p class="u_info_add"> Добавить пользователя </p>
+                <p class="u_add"> + </p>
+            </div>
+        </a>
+    </div>
+
+    
+
+{% endblock %}
+
+

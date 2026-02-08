@@ -1,0 +1,17 @@
+    
+                 
+<li><a href="#">Меню1</a></li>
+<li><a href="#">Меню2</a></li>
+<li><a href="err404">404</a></li>
+<li><a href="\quiz\">КВИЗЫ</a></li>
+
+{% if admin %}
+    {% include('menu_admin.html') %}
+{% endif %}
+
+
+<!-- 
+так же можно добавить отдельное меню для зарегистрированного пользователя
+if user_logged
+    include('menu_user.html')          
+-->

@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+
+
+
+<div class="modal" id="modal-one" aria-hidden="true">
+            
+    <!-- а для того чтобы закрыть кликом мимо окна -->
+    <a href="" class="a_modal"></a> 
+    
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <a href="" class="btn-close" aria-hidden="true">×</a>
+            <p>Добавление пользователя</p>            
+        </div>
+        <div class="modal-body">            
+            <form action="/user_add/" method="post">                
+                <label for="user_nane">Имя</label>
+                <input type="text" id="user_name" name="user_name">                    
+                <input type="submit" value="OK">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // для автофокуса
+window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#modal-one') {
+        // фокус на input через 0.5 сек
+        setTimeout(() => document.querySelector('#user_name').focus(), 500);
+    }
+});
+
+</script>

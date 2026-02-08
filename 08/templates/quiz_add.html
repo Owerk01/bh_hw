@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block main_menu %}
+{{ super() }}
+{% include 'quiz_menu.html' %}
+{% endblock %}
+
+{% block content1_head %}
+<h2>Добавить новый квиз</h2>
+{% endblock %}
+
+{% block content1 %}
+<div class="quiz_form">
+  <form method="post">
+    <label for="name">Название квиза:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="user_id">Владелец:</label><br>
+    <select name="user_id" required>
+      {% for u in users %}
+        <option value="{{ u.id }}">{{ u.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <input type="submit" value="Создать" class="button">
+      <a href="{{ url_for('view_quiz_edit') }}" class="button">Назад</a>
+</form>
+</div>
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}

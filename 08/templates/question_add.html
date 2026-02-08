@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block main_mode %}
+{{ super() }}
+{% include 'quiz_menu.html' %}
+{% endblock %}
+
+{% block content1_head %}
+<h2>Добавить новый вопрос</h2>
+{% endblock %}
+
+{% block content1 %}
+<div class="quiz_form">
+  <form method="post">
+    <label>Вопрос:</label><br>
+    <textarea name="question" required></textarea><br><br>
+
+    <label>Правильный ответ:</label><br>
+    <input type="text" name="answer" required><br><br>
+
+    <label>Неправильный вариант 1:</label><br>
+    <input type="text" name="wrong1" required><br><br>
+
+    <label>Неправильный вариант 2:</label><br>
+    <input type="text" name="wrong2" required><br><br>
+
+    <label>Неправильный вариант 3:</label><br>
+    <input type="text" name="wrong3" required><br><br>
+
+    <input type="submit" value="Добавить" class="button">
+      <a href="{{ url_for('view_quiz_edit') }}" class="button">Назад</a>
+  </form>
+</div>
+{% endblock %}

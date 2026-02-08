@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% include 'user_modal.html'%}
+
+{% block main_menu %} 
+    {{ super() }} 
+    {% include 'quiz_menu.html' %}    
+{% endblock %}
+
+{% block content1_head %}
+    <h2> КВИЗЫ </h2>    
+{% endblock %}
+
+{% block content1 %}    
+    <div class="start_form quiz_form">
+        <form action="/quiz/" method="post">
+            <div class="form1">
+                <h2>Выберите КВИЗ</h2>
+                
+                <select name="quiz" >
+                    {% for q in quizes %}
+                        <option value="{{ q.id }}"> {{ q.name }}</option>
+
+                    {% endfor%}
+
+                </select>
+                <div>
+                    <input class="button" type="submit" value ='Начать КВИЗ'>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
+
+
