@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{% block title %}My Web App{% endblock %}</title>
+    <title>{% block title %}My Flask App{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="layout">
         <header>
-            <h1><a href="{{ url_for('index') }}">🏠 My Web App</a></h1>
+            <h1><a href="{{ url_for('index') }}">🏠 My Flask App</a></h1>
             <div>
                 {% if session.login %}
                     <span>Привет, {{ session.full_name }}!</span>
