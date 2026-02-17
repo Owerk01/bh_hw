@@ -1,5 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey, String, Table, Column, func, Integer
+from sqlalchemy import ForeignKey, Table, Column, func, Integer
 
 from datetime import datetime
 import logging
@@ -11,7 +11,7 @@ handler.setFormatter(colorlog.ColoredFormatter(
     log_colors={
         'DEBUG': 'cyan',
         'INFO': 'green',
-        'WARNING': 'yellow',   # ← вот он, жёлтый!
+        'WARNING': 'yellow',   
         'ERROR': 'red',
         'CRITICAL': 'red,bg_white',
     }

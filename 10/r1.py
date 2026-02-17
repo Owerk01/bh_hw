@@ -1,10 +1,11 @@
 import requests
 
-url = "http://127.0.0.1:8000/users"
-data = {"name": "Aleks", "age": 18}
+url = "http://127.0.0.1:8000/quizzes/3/link"
+data = {"ids": [1, 2]}
 res = requests.post(url, json=data)
-print(res.json())
-print(res.text)
+print(res)
+# print(res.json())
+# print(res.text)
 
 
 

@@ -40,3 +40,9 @@ class Question(QuestionAdd):
 
 class QuestionId(BaseModel):
     id: int
+
+class QuizQuestions(Quiz):
+    questions: list[Question]
+
+class QuestionLink(BaseModel):
+    ids: list[int]

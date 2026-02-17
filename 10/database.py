@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-
+from sqlalchemy.orm import selectinload
 from sqlalchemy import select, text
 
 from models import UserOrm, Model, QuizOrm, QuestionOrm, logger
@@ -195,3 +195,25 @@ class UserRepository:
             res = await session.execute(query)
             question = res.scalars().first()
             return question
+        
+    @classmethod
+    async def get_quiz_questions(cls, id) -> QuizQuestions:
+        async with new_session() as session:
+            query = select(QuizOrm).options(selectinload(QuizOrm.questions)).filter(QuizOrm.id==id)
+            res = await session.execute(query)
+            quiz_questions = res.scalars().first()
+            logger.debug(quiz_questions)
+            return quiz_questions
+        
+    @classmethod
+    async def link_questions(cls, id: int, ids: list[int]) -> bool:
+        async with new_session() as session:
+            res = await session.execute(select(QuizOrm).options(selectinload(QuizOrm.questions)).filter(QuizOrm.id==id))
+            quiz = res.scalars().first()
+            if not quiz:
+                return False
+            questions = await session.execute(select(QuestionOrm).filter(QuestionOrm.id.in_(ids)))
+            questions = questions.scalars().all()
+            quiz.questions = questions
+            await session.commit()
+            return True

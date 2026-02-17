@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from schemas import *
 from database import UserRepository as ur, logger
@@ -59,7 +59,7 @@ async def questions_get(
     offset:int = Query(ge=0, default = 0)
 ) -> dict[str, list[Question] | int]:
     questions = await ur.get_questions(limit, offset)
-    logger.debug(f"questions: {questions}")
+    #logger.debug(f"questions: {questions}")
     return {"data":questions, "limit":limit, "offset":offset}
 
 # @users_router.get('/u2')
@@ -114,8 +114,19 @@ async def question_add(question: QuestionAdd) -> QuestionId:
     question_id = await ur.add_question(question)
     return {'id':question_id}
 
+@quizzes_router.get('/{id}/questions')
+async def quiz_questions_get(id: int) -> QuizQuestions:
+    quiz_questions = await ur.get_quiz_questions(id)
+    #logger.debug(quiz_questions)
+    return quiz_questions
 
-
+@quizzes_router.post('/{id}/link')
+async def questions_link(id: int, questions: QuestionLink):
+    sucess = await ur.link_questions(id, questions.ids)
+    if not sucess:
+        raise HTTPException(404, 'Quiz not found')
+    return {"status": "ok"}
+    
 # пример развернутого ответа
 #     {
             # "items": [...],

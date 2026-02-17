@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import uvicorn
 from routers import default_router, users_router, quizzes_router, questions_router
