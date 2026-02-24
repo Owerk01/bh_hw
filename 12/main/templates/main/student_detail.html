@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ student.surname }} {{ student.name }}{% endblock %}
+
+{% block content1_head %}
+    <h1>{{ student.surname }} {{ student.name }}</h1>
+{% endblock %}
+
+{% block content1 %}
+    <p><strong>Возраст:</strong> {{ student.age }}</p>
+    <p><strong>Пол:</strong> {{ student.get_gender_display }}</p>
+    <p><strong>Статус:</strong> {% if student.active %}Активен{% else %}Не активен{% endif %}</p>
+    
+    <h3>Посещаемые курсы:</h3>
+    <ul>
+        {% for course in student.courses.all %}
+            <li><a href="{% url 'course_detail' course.id %}">{{ course }}</a></li>
+        {% empty %}
+            <li>Студент не записан ни на один курс.</li>
+        {% endfor %}
+    </ul>
+    
+    <br>
+    <a href="{% url 'students_list' %}">&larr; К списку студентов.</a>
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}

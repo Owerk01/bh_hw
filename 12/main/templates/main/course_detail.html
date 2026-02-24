@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course }}{% endblock %}
+
+{% block content1_head %}
+    <h1>{{ course.get_name_display }} (№{{ course.course_num }})</h1>
+{% endblock %}
+
+{% block content1 %}
+    <p><strong>Описание:</strong> {{ course.description|default:"Описание отсутствует." }}</p>
+    <p><strong>Даты:</strong> с {{ course.start_date|default:"?" }} по {{ course.end_date|default:"?" }}</p>
+    
+    <h3>Студенты на курсе:</h3>
+    <ul>
+        {% for student in course.Students.all %}
+            <li><a href="{% url 'student_detail' student.id %}">{{ student }}</a></li>
+        {% empty %}
+            <li>На этом курсе нет студентов.</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{% url 'courses_list' %}">&larr; К курсам</a>
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Список студентов{% endblock %}
+
+{% block content1_head %}
+    <h1>Наши студенты:</h1>
+{% endblock %}
+
+{% block content1 %}
+    {% if students %}
+        <ul>
+            {% for student in students %}
+                <li>
+                    <a href="{% url 'student_detail' student.id %}">
+                        {{ student.surname }} {{ student.name }} 
+                        ({{ student.get_gender_display }}, {{ student.age }} лет)
+                    </a>
+                </li>
+            {% empty %}
+                <p>Студентов нет.</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ошибка: список студентов пуст.</p>
+    {% endif %}
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}

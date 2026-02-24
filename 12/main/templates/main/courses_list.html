@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Список курсов{% endblock %}
+
+{% block content1_head %}
+    <h1>Доступные курсы</h1>
+{% endblock %}
+
+{% block content1 %}
+    {% if courses %}
+        <ul>
+            {% for course in courses %}
+                <li>
+                    <a href="{% url 'course_detail' course.id %}">
+                        {{ course.get_name_display }} - Курс №{{ course.course_num }}
+                    </a>
+                    {% if course.start_date %}
+                        (Старт: {{ course.start_date }})
+                    {% endif %}
+                </li>
+            {% empty %}
+                <p>Курсов нет.</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет данных.</p>
+    {% endif %}
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}

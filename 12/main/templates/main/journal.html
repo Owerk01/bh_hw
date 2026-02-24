@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Журнал оценок{% endblock %}
+
+{% block content1_head %}
+    <h1>Журнал успеваемости:</h1>
+{% endblock %}
+
+{% block content1 %}
+    {% if grades %}
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th>Студент</th>
+                    <th>Курс</th>
+                    <th>Оценка</th>
+                    <th>Дата оценки</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'student_detail' grade.student.id %}">
+                                {{ grade.student.surname }} {{ grade.student.name }}
+                            </a>
+                        </td>
+                        
+                        <td>
+                            <a href="{% url 'course_detail' grade.course.id %}">
+                                {{ grade.course }}
+                            </a>
+                        </td>
+                        
+                        <td style="text-align: center; font-weight: bold;">
+                            {{ grade.grade }}
+                        </td>
+                        
+                        <td>
+                            {{ grade.date|default:"Дата не указана." }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center;">Оценок нет.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Журнал пуст.</p>
+    {% endif %}
+{% endblock %}
+
+{% block content2_head %}{% endblock %}
+{% block content2 %}{% endblock %}
